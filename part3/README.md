@@ -1,4 +1,5 @@
-
+### simple pod
+```
 apiVersion: v1
 kind: Pod
 metadata:
@@ -11,7 +12,7 @@ spec:
     image: ubuntu
     command: ["/bin/echo", "Hello"]  
     args: ["Welcome", "to", "Kubesimplify"]
-
+```
  ### CM
  ```
 apiVersion: v1
@@ -25,6 +26,7 @@ data:
  ```   
 
 ### Simple Pod
+```
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -38,7 +40,7 @@ spec:
         command: ["sleep", "5"]  
       restartPolicy: OnFailure  
   backoffLimit: 4 
-
+```
 ## init container
 ```
 apiVersion: v1
@@ -64,6 +66,7 @@ spec:
       mountPath: /usr/share/nginx/html
 ```
 ### multiple init container
+```
 apiVersion: v1
 kind: Pod
 metadata:
@@ -72,15 +75,16 @@ spec:
   initContainers:
   - name: check-db-service
     image: busybox
-    command: ['sh', '-c', 'until nslookup db.default.svc.cluster.loca
+    command: [sh', '-c', 'until nslookup db.default.svc.cluster.local; do echo waiting for db service; sleep 2; done;']
   - name: check-myservice
     image: busybox
-    command: ['sh', '-c', 'until nslookup myservice.default.svc.clust
+    command: ['sh', '-c', 'until nslookup myservice.default.svc.cluster.local; do echo waiting for db service; sleep 2; done;']
   containers:
   - name: main-container
     image: busybox
     command: ['sleep', '3600']
-
+```
+```
 ---
 apiVersion: v1
 kind: Service
@@ -105,6 +109,8 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
+```
+
 ### Multi containe rpod 
 apiVersion: v1
 kind: Pod
