@@ -111,7 +111,8 @@ spec:
     targetPort: 80
 ```
 
-### Multi containe rpod 
+### Multi containerr pod 
+```
 apiVersion: v1
 kind: Pod
 metadata:
@@ -120,38 +121,18 @@ spec:
   volumes:
   - name: shared-data
     emptyDir: {}
-  containers:
+  initContainers:
   - name: meminfo-container
     image: alpine
+    restartPolicy: Always
     command: ['sh', '-c', 'sleep 5; while true; do cat /proc/meminfo > /usr/share/data/index.html; sleep 10; done;']
     volumeMounts:
     - name: shared-data
       mountPath: /usr/share/data
+  containers:
   - name: nginx-container
     image: nginx
     volumeMounts:
     - name: shared-data
       mountPath: /usr/share/nginx/html
-      
-### Probes 
-apiVersion: v1
-kind: Pod
-metadata:
-  creationTimestamp: null
-  labels:
-    run: nginx
-  name: nginx
-spec:
-  containers:
-  - image: nginx
-    name: nginx
-    livenessProbe:
-      httpGet:
-        path: /
-        port: 80
-    ports:
-    - containerPort: 80
-    resources: {}
-  dnsPolicy: ClusterFirst
-  restartPolicy: Always
-status: {}
+```      
