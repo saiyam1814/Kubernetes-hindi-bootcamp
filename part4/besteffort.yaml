@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-besteffort
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+
