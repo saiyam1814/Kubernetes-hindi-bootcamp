@@ -8,9 +8,6 @@ In Kubernetes when you launch a pod, there is also a pause container that gets s
 ctr --namespace k8s.io containers list | grep pause
 
 
-##Ephemeral container 
-Ephemeral contaienrs are there to troubleshoot the containers specially distroless/slim containers where there is no filesystem on the node. 
-
 ##PDB
 Create deployment
 Create pdb
@@ -25,3 +22,4 @@ kubectl apply -f downwardapipod.yaml
 
 ### QOS 
 kubectl get pods nginx-guaranteed -oyaml | grep qos
+
