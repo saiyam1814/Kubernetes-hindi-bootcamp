@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: example-quota
+  namespace: example-namespace
+spec:
+  hard:
+    requests.cpu: "500m" # total amount of CPU that can be requested
+    requests.memory: "200Gi" # total amount of memory that can be requested
+    limits.cpu: "1" # total amount of CPU limit across all pods
+    limits.memory: 400Gi # total amount of memory limit across all pods
+    pods: "10" # total number of pods that can be created

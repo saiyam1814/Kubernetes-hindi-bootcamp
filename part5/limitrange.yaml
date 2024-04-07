@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: example-limitrange
+  namespace: example-namespace
+spec:
+  limits:
+  - type: Pod
+    max:
+      cpu: "2" # max CPU per Pod
+      memory: 2Gi # max memory per Pod
+    min:
+      cpu: "200m" # min CPU per Pod
+      memory: 200Mi # min memory per Pod
+  - type: Container
+    default:
+      cpu: "100m" # default CPU request for any container
+      memory: 100Mi # default memory request for any container
+    defaultRequest:
+      cpu: "100m" # default CPU limit for any container
+      memory: 100Mi # default memory limit for any container
+    max:
+      cpu: "1" # max CPU per Container
+      memory: 1Gi # max memory per Container
+    min:
+      cpu: "100m" # min CPU per Container
+      memory: 100Mi # min memory per Container
