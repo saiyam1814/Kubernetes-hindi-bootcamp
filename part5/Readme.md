@@ -1,7 +1,7 @@
 ## Namespaces 
 
 ```
-kubectl get nd 
+kubectl get ns 
 kubectl create ns dev 
 kubectl create ns bootcamp
 kubectl create deploy demo -n bootcamp --image=nginx
@@ -35,9 +35,9 @@ kubectl create deploy nginx --image=nginx --replicas=110
 ## topolgy constraint
 deploy yaml 
 ```
-kubectl scale demo-app --replicas 6
+kubectl scale deploy demo-app --replicas 6
 kubectl cordon controlplane
-kubectl scale demo-app --replicas 7
+kubectl scale  deploy demo-app --replicas 7
 
 ```
 
