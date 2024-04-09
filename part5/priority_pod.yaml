@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: high-priority-pod
 spec:
-  priorityClassName: high-priority
+  priorityClassName: demo-priority
   containers:
   - name: busybox
     image: busybox
