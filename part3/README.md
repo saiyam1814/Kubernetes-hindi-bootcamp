@@ -75,7 +75,7 @@ spec:
   initContainers:
   - name: check-db-service
     image: busybox
-    command: [sh', '-c', 'until nslookup db.default.svc.cluster.local; do echo waiting for db service; sleep 2; done;']
+    command: ['sh', '-c', 'until nslookup db.default.svc.cluster.local; do echo waiting for db service; sleep 2; done;']
   - name: check-myservice
     image: busybox
     command: ['sh', '-c', 'until nslookup myservice.default.svc.cluster.local; do echo waiting for db service; sleep 2; done;']
@@ -111,7 +111,7 @@ spec:
     targetPort: 80
 ```
 
-### Multi containerr pod 
+### Multi container pod 
 ```
 apiVersion: v1
 kind: Pod
