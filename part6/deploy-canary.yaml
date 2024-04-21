@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-stable
+spec:
+  replicas: 9
+  selector:
+    matchLabels:
+      app: nginx
+      version: "1.17"
+  template:
+    metadata:
+      labels:
+        app: nginx
+        version: "1.17"
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.17
+        ports:
+        - containerPort: 80
