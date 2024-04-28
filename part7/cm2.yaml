@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config-dev
+data:
+  settings.properties: |
+    # Development Configuration
+    debug=true
+    database_url=http://dev-db.example.com
+    featureX_enabled=false
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config-prod
+data:
+  settings.properties: |
+    # Production Configuration
+    debug=false
+    database_url=http://prod-db.example.com
+    featureX_enabled=true

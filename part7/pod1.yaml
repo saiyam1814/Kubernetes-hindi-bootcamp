@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-pod
+spec:
+  containers:
+  - name: mysql
+    image: mysql:5.7
+    env:
+      - name: MYSQL_USER
+        valueFrom:
+          configMapKeyRef:
+            name: bootcamp-configmap
+            key: username
+      - name: MYSQL_DATABASE
+        valueFrom:
+          configMapKeyRef:
+            name: bootcamp-configmap
+            key: database_name
+      - name: MYSQL_PASSWORD
+        value: demo123  # Specify a strong password.
+      - name: MYSQL_ROOT_PASSWORD
+        value: demo345 # You should change this value.
+    ports:
+      - containerPort: 3306
+        name: mysql
+    volumeMounts:
+      - name: mysql-storage
+        mountPath: /var/lib/mysql
+  volumes:
+    - name: mysql-storage
+      emptyDir: {}

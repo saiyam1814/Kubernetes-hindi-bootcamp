@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-root-pass
+                key: password
+          - name: MYSQL_USER
+            valueFrom:
+              configMapKeyRef:
+                name: bootcamp-configmap
+                key: username
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-user-pass
+                key: password
+          - name: MYSQL_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: bootcamp-configmap
+                key: database_name
+        ports:
+          - containerPort: 3306
+        volumeMounts:
+          - name: mysql-storage
+            mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-storage
+          emptyDir: {}

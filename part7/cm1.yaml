@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bootcamp-configmap
+data:
+  username: "saiyam"
+  database_name: "exampledb"
