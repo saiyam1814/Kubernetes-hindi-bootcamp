@@ -1,8 +1,9 @@
 ## Configmaps
 Creating config map 
-Example 1 demonstrates how you can have a user for the database passes in as a config map 
+Example 1 demonstrates how you can have a user for the database passed in as a config map as an env:
+
 ```
-kubectl aply -f cm1.yaml
+kubectl apply -f cm1.yaml
 kubectl apply -f pod1.yaml
 
 kubectl exec -it mysql-pod -- mysql -u root -p
