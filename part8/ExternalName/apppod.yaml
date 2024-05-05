@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-application
+  namespace: application-ns
+spec:
+  containers:
+  - name: app
+    image: ttl.sh/saiyamdemo:1h
+    env:
+      - name: DATABASE_HOST
+        value: "external-db-service"
+      - name: DATABASE_PORT
+        value: "5432"
+      - name: DATABASE_USER
+        value: "postgres"
+      - name: DATABASE_PASSWORD
+        value: "example"
+      - name: DATABASE_NAME
+        value: "postgres"

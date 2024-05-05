@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-database
+  namespace: database-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-database
+  template:
+    metadata:
+      labels:
+        app: my-database
+    spec:
+      containers:
+      - name: database
+        image: postgres:latest
+        env:
+          - name: POSTGRES_PASSWORD
+            value: "example"
+        ports:
+        - containerPort: 5432

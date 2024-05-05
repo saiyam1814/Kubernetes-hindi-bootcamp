@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-database-service
+  namespace: database-ns
+spec:
+  selector:
+    app: my-database
+  ports:
+  - protocol: TCP
+    port: 5432
+    targetPort: 5432

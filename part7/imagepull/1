@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bootcamp-demo-pod
+spec:
+  containers:
+  - name: bootcamp-demo
+    image: saiyam911/bootcamp-demo:v1
+  imagePullSecrets:
+  - name: pullsec
+
