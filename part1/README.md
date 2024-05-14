@@ -55,5 +55,5 @@ kubectl run nginx --image=nginx
 <p>&nbsp;</p>
 
 ### For More you can Visit 
-- Blog & News Latter <https://kubesimplify.com/>
+- Blog & Newsletter <https://kubesimplify.com/>
 - YouTube [Kubesimplify Hindi](https://www.youtube.com/watch?v=F8FcWV56sp4&list=PL2z28C0cnXhMSIN0JyZkI1XBg1K3VZ3cV)
