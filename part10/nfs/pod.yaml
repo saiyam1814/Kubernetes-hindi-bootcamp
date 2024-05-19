@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nfs-pod
+spec:
+  containers:
+    - name: busybox
+      image: busybox
+      command: ['sh', '-c', 'echo "Hello from NFS PV of Kubesimplify" > /mnt/data/hello.txt; sleep 3600']
+      volumeMounts:
+        - name: nfs-storage
+          mountPath: /mnt/data
+  volumes:
+    - name: nfs-storage
+      persistentVolumeClaim:
+        claimName: nfs-pvc

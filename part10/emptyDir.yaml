@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: emptydir-pod
+spec:
+  containers:
+    - name: busybox
+      image: busybox
+      command: ['sh', '-c', 'echo "Writing data to /data/emptydir-volume..."; echo "Hello from Kubesimplify" > /data/emptydir-volume/hello.txt; sleep 3600']
+      volumeMounts:
+        - name: temp-storage
+          mountPath: /data/emptydir-volume
+  volumes:
+    - name: temp-storage
+      emptyDir: {}
