@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostpath-pod
+spec:
+  containers:
+    - name: busybox
+      image: busybox
+      command: ['sh', '-c', 'echo "Writing data to /data/hostpath-volume..."; echo "Hello from Kubesimplify" > /data/hostpath-volume/hello.txt; sleep 3600']
+      volumeMounts:
+        - name: host-storage
+          mountPath: /data/hostpath-volume
+  volumes:
+    - name: host-storage
+      hostPath:
+        path: /tmp/hostpath
+        type: DirectoryOrCreate
