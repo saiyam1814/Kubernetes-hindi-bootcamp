@@ -45,14 +45,20 @@ jobs:
           variables: |
             image_deploy_tag=sha-${{ env.sha_short }}
             
-      - name: Commit deploy manifest on local repo
+      - name: Configure git for the action
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          
+      - name: Pull latest changes from the remote branch
+        run: git pull origin master --rebase
+
+      - name: Commit deploy manifest on local repo
+        run: |
           git add app/deploy/deploy.yaml
           git commit -s -m "[skip ci] Generate deployment manifests"
           
-      - name: Push deploy manifests to local repo
+      - name: Push deploy manifests to remote repo
         uses: ad-m/github-push-action@v0.6.0
         with: 
           github_token: ${{ secrets.GITHUB_TOKEN }}
