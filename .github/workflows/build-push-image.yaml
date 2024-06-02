@@ -1,4 +1,3 @@
----
 name: build and push docker image
 on:
   push
@@ -12,20 +11,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
-      - name: Deploy docker image
-        uses: docker/build-push-action@v5
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
         with:
-          context: app/
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: saiyam911/kubesimplify-demo
-          tag_with_ref: true
-          add_git_labels: true
-          tag_with_sha: true
+          
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: app/
+          push: true
+          tags: |
+            saiyam911/kubesimplify-demo:latest
+            saiyam911/kubesimplify-demo:sha-${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
           
       - name: Get git sha short
         id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
         
       - name: Generate deploy manifest from Jinja template
         uses: cuchi/jinja2-action@v1.1.0
@@ -34,16 +43,16 @@ jobs:
           output_file: app/deploy/deploy.yaml
           strict: true
           variables: |
-            image_deploy_tag=sha-${{ steps.vars.outputs.sha_short }}
+            image_deploy_tag=sha-${{ env.sha_short }}
             
       - name: Commit deploy manifest on local repo
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add .
-          git commit -s -m "[skip ci] Generate deployment manifests" 
+          git add app/deploy/deploy.yaml
+          git commit -s -m "[skip ci] Generate deployment manifests"
           
       - name: Push deploy manifests to local repo
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@v0.6.0
         with: 
           github_token: ${{ secrets.GITHUB_TOKEN }}
