@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: saiyam911/kubesimplify-demo:sha-c8ace67
+        image: saiyam911/kubesimplify-demo:sha-381c07a
         imagePullPolicy: Always
         env:
         - name: DB_USERNAME
@@ -123,3 +123,12 @@ spec:
   - hosts:
     - demo.kubesimplify.com
     secretName: app
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-postgresql-credentials
+type: Opaque
+data:
+  password: bmV3X3Bhc3N3b3Jk
+  username: Z29hbHNfdXNlcg==
