@@ -19,7 +19,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          
+
+      - name: Get git SHA short
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -27,15 +31,11 @@ jobs:
           push: true
           tags: |
             saiyam911/kubesimplify-demo:latest
-            saiyam911/kubesimplify-demo:sha-${{ github.sha }}
+            saiyam911/kubesimplify-demo:sha-${{ env.sha_short }}
           labels: |
             org.opencontainers.image.source=${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
           
-      - name: Get git sha short
-        id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-        
       - name: Generate deploy manifest from Jinja template
         uses: cuchi/jinja2-action@v1.1.0
         with: 
