@@ -50,8 +50,14 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
+      - name: Stash unstaged changes
+        run: git stash --include-untracked
+        
       - name: Pull latest changes from the remote branch
-        run: git pull origin master --rebase
+        run: git pull origin main --rebase
+        
+      - name: Apply stashed changes
+        run: git stash pop || echo "No stashed changes to apply"
 
       - name: Commit deploy manifest on local repo
         run: |
