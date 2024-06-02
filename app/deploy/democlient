@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres-client
+spec:
+  containers:
+  - name: postgres-client
+    image: postgres:latest
+    env:
+    - name: PGPASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: my-postgresql-credentials
+          key: password
+    - name: PGUSER
+      valueFrom:
+        secretKeyRef:
+          name: my-postgresql-credentials
+          key: username
+    command: ["sleep", "infinity"]
+
