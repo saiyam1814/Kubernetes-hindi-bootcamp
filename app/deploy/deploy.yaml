@@ -14,18 +14,18 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: saiyam911/kubesimplify-demo:sha-381c07a
+        image: saiyam911/kubesimplify-demo:sha-7cdbdda
         imagePullPolicy: Always
         env:
         - name: DB_USERNAME
           valueFrom:
             secretKeyRef:
-              name: my-postgresql-credentials
+              name: postgresql-credentials
               key: username
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: my-postgresql-credentials
+              name: postgresql-credentials
               key: password
         - name: DB_HOST
           value: my-postgresql-rw.default.svc.cluster.local
@@ -127,7 +127,7 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: my-postgresql-credentials
+  name: postgresql-credentials
 type: Opaque
 data:
   password: bmV3X3Bhc3N3b3Jk
