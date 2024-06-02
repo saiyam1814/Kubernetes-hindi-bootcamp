@@ -1,0 +1,58 @@
+name: build and push docker image
+on:
+  push
+
+jobs:
+  release-docker:
+    name: Release docker image
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: app/
+          push: true
+          tags: |
+            saiyam911/kubesimplify-demo:latest
+            saiyam911/kubesimplify-demo:sha-${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+          
+      - name: Get git sha short
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        
+      - name: Generate deploy manifest from Jinja template
+        uses: cuchi/jinja2-action@v1.1.0
+        with: 
+          template: app/tmpl/deploy.j2
+          output_file: app/deploy/deploy.yaml
+          strict: true
+          variables: |
+            image_deploy_tag=sha-${{ env.sha_short }}
+            
+      - name: Commit deploy manifest on local repo
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add app/deploy/deploy.yaml
+          git commit -s -m "[skip ci] Generate deployment manifests"
+          
+      - name: Push deploy manifests to local repo
+        uses: ad-m/github-push-action@v0.6.0
+        with: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
