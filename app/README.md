@@ -50,5 +50,11 @@ Create GitHub Actions secret - DOCKERHUB_USERNAME and DOCKERHUB_PASSWORD
 Make sure your actions have push access as well. 
 
 
+## Install ArgoCd
+```
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl get secret -n argocd argocd-initial-admin-secret -oyaml
 
-
+```
