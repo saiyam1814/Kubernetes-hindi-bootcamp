@@ -1,4 +1,5 @@
 ### simple pod
+
 ```
 apiVersion: v1
 kind: Pod
@@ -10,22 +11,25 @@ spec:
   containers:
   - name: example-container
     image: ubuntu
-    command: ["/bin/echo", "Hello"]  
+    command: ["/bin/echo", "Hello"]
     args: ["Welcome", "to", "Kubesimplify"]
 ```
- ### CM
- ```
+
+### CM
+
+```
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: example-configmap-folded
+ name: example-configmap-folded
 data:
-  mymessage: >
-    Hello, this is a folded
-    multi-line message.
- ```   
+ mymessage: >
+   Hello, this is a folded
+   multi-line message.
+```
 
 ### Simple Pod
+
 ```
 apiVersion: batch/v1
 kind: Job
@@ -37,11 +41,13 @@ spec:
       containers:
       - name: nginx
         image: nginx
-        command: ["sleep", "5"]  
-      restartPolicy: OnFailure  
-  backoffLimit: 4 
+        command: ["sleep", "5"]
+      restartPolicy: OnFailure
+  backoffLimit: 4
 ```
+
 ## init container
+
 ```
 apiVersion: v1
 kind: Pod
@@ -65,7 +71,9 @@ spec:
     - name: shared-data
       mountPath: /usr/share/nginx/html
 ```
+
 ### multiple init container
+
 ```
 apiVersion: v1
 kind: Pod
@@ -78,12 +86,13 @@ spec:
     command: ['sh', '-c', 'until nslookup db.default.svc.cluster.local; do echo waiting for db service; sleep 2; done;']
   - name: check-myservice
     image: busybox
-    command: ['sh', '-c', 'until nslookup myservice.default.svc.cluster.local; do echo waiting for db service; sleep 2; done;']
+    command: ['sh', '-c', 'until nslookup myservice.default.svc.cluster.local; do echo waiting for myservice service; sleep 2; done;']
   containers:
   - name: main-container
     image: busybox
     command: ['sleep', '3600']
 ```
+
 ```
 ---
 apiVersion: v1
@@ -111,7 +120,8 @@ spec:
     targetPort: 80
 ```
 
-### Multi container pod 
+### Multi container pod
+
 ```
 apiVersion: v1
 kind: Pod
@@ -135,4 +145,4 @@ spec:
     volumeMounts:
     - name: shared-data
       mountPath: /usr/share/nginx/html
-```      
+```
