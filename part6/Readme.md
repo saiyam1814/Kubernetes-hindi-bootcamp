@@ -32,7 +32,9 @@ kubectl create deploy bootcamp --image nginx --replicas 3 --port 80
 kubectl rollout status deployment bootcamp
 ```
 Update image 
-```kubectl set image deploy bootcamp nginx=nginx:1.14.a --record````
+```
+kubectl set image deploy bootcamp nginx=nginx:1.14.a --record
+```
 See the rollout history 
 ```
 kubectl rollout history deploy/bootcamp
